@@ -10,7 +10,7 @@ import streamlit as st
 
 
 APP_DIR = Path(__file__).resolve().parent
-ROOT = APP_DIR.parent
+ROOT = APP_DIR
 MODELS_DIR = ROOT / "models"
 METRICS_DIR = ROOT / "outputs" / "metrics"
 
