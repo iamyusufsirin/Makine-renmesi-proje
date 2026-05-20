@@ -1,23 +1,3 @@
-"""
-Kalp Hastalığı Risk Tahmin Sistemi — Streamlit deployment (Görev 5)
-====================================================================
-
-Form input → canlı risk tahmini → tahminin altında o hastaya ait canlı SHAP
-force plot ile "model neden bu kararı verdi" açıklaması.
-
-ÇALIŞTIRMA (proje kökünden):
-    streamlit run app/streamlit_app.py
-
-ÖN KOŞUL:
-    01–04 notebook'ları çalıştırılmış olmalı. Uygulama şu dosyaları kullanır:
-    models/deploy_info.joblib, models/scaler.joblib, models/<en_iyi_model>.joblib,
-    models/shap_background.csv  (LinearExplainer kullanılırsa).
-
-STREAMLIT CLOUD'A DEPLOY:
-    1. Tüm proje klasörünü (models/ dahil) bir GitHub reposuna push et.
-    2. share.streamlit.io → New app → repo seç → ana dosya: app/streamlit_app.py
-    3. requirements.txt otomatik kullanılır.
-"""
 from pathlib import Path
 
 import joblib
@@ -28,9 +8,7 @@ import pandas as pd
 import shap
 import streamlit as st
 
-# ----------------------------------------------------------------------
-# Yollar ve sabitler
-# ----------------------------------------------------------------------
+
 APP_DIR = Path(__file__).resolve().parent
 ROOT = APP_DIR.parent
 MODELS_DIR = ROOT / "models"
@@ -67,9 +45,6 @@ HELP = {
 }
 
 
-# ----------------------------------------------------------------------
-# Artefakt kontrolü ve yükleme
-# ----------------------------------------------------------------------
 def missing_artifacts():
     needed = ["deploy_info.joblib", "scaler.joblib"]
     return [f for f in needed if not (MODELS_DIR / f).exists()]
@@ -109,9 +84,6 @@ def load_best_model_metrics(best_name):
     return row.iloc[0].to_dict() if len(row) else None
 
 
-# ----------------------------------------------------------------------
-# Çekirdek mantık (Streamlit'ten bağımsız — test edilebilir)
-# ----------------------------------------------------------------------
 def build_feature_row(input_dict, scaler, selected, scale=True):
     """Ham hasta girdisini modelin beklediği özellik satırına dönüştürür.
 
@@ -177,9 +149,7 @@ def waterfall_figure(shap_exp):
     return plt.gcf()
 
 
-# ----------------------------------------------------------------------
 # Arayüz
-# ----------------------------------------------------------------------
 def render_sidebar(art):
     with st.sidebar:
         st.header("Model Bilgisi")
