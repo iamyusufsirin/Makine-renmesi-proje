@@ -1,1 +1,1 @@
-# Makine-renmesi-proje
+# makine-öğrenmesi-proje
